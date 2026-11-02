@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  SHOPMASTER - Tienda virtual con carrito, pago simulado y
+  ticket térmico en PDF.
+  Archivo: index.html  →  ESTRUCTURA (el "esqueleto" de la página)
+  Desarrollado por: Sohany Galan — 24-SISN-8-004
+  ============================================================
+-->
+<html lang="es">
+<head>
+  <!-- 1. Metadatos básicos -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ShopMaster - Boutique online de moda, joyería y tecnología. Proyecto educativo con FakeStoreAPI, carrito, pago simulado y ticket PDF.">
+  <meta name="author" content="Sohany Galan — 24-SISN-8-004">
+  <title>ShopMaster | Boutique Online</title>
+
+  <!-- 2. Tipografías: Playfair Display (títulos elegantes) + Inter (texto moderno) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- 3. Bootstrap 5 (diseño responsivo y componentes: modal, offcanvas, alertas) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <!-- 4. Font Awesome 6 (íconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- 5. Nuestros estilos propios (SIEMPRE después de Bootstrap para poder sobrescribirlo) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================================
+       BARRA DE ANUNCIOS
+       ======================================================== -->
+  <div class="announcement-bar">
+    <span><i class="fa-solid fa-truck-fast me-2"></i>Envío gratis en todos los pedidos</span>
+    <span class="d-none d-md-inline">·</span>
+    <span class="d-none d-md-inline">Devoluciones sin costo durante 30 días</span>
+  </div>
+
+  <!-- ========================================================
+       BARRA DE NAVEGACIÓN: logo + menú + buscador + carrito
+       ======================================================== -->
+  <nav id="mainNav" class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <!-- Logo: ícono de carrito + nombre de la tienda -->
+      <a class="navbar-brand brand" href="#inicio">
+        <i class="fa-solid fa-cart-shopping brand-icon"></i>
+        <span>ShopMaster</span>
+      </a>
+
+      <!-- Íconos a la derecha (siempre visibles) -->
+      <div class="d-flex align-items-center gap-1 order-lg-3">
+        <button class="icon-btn d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Abrir menú">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <button class="icon-btn position-relative" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas"
+                aria-label="Abrir carrito">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span id="cartCount" class="cart-badge">0</span>
+        </button>
+      </div>
+
+      <!-- Menú + buscador (se colapsa en móvil) -->
+      <div class="collapse navbar-collapse order-lg-2" id="navMenu">
+        <ul class="navbar-nav mx-lg-auto">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#catalogo">Colección</a></li>
+          <li class="nav-item"><a class="nav-link" href="#editorial">Editorial</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+        <form class="search-box" role="search" id="searchForm">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="searchInput" type="search" placeholder="Buscar..." aria-label="Buscar productos">
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenedor donde aparecerán las alertas de Bootstrap (mensajes de confirmación) -->
+  <div id="alertContainer" class="alert-container" aria-live="polite"></div>
+
+  <!-- ========================================================
+       HERO / BANNER PRINCIPAL con ropa de fondo
+       ======================================================== -->
+  <header id="inicio" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <p class="eyebrow">Colección Otoño · Invierno 2026</p>
+      <h1 class="hero-title">El arte de vestir<br><em>con elegancia</em></h1>
+      <p class="hero-text">Piezas atemporales, materiales nobles y detalles que marcan la diferencia. Descubre una selección pensada para quienes no se conforman con lo ordinario.</p>
+      <div class="d-flex flex-wrap gap-3">
+        <a href="#catalogo" class="btn btn-light-lux">Comprar ahora <i class="fa-solid fa-arrow-right ms-2"></i></a>
+        <a href="#editorial" class="btn btn-outline-lux">Descubrir</a>
+      </div>
+    </div>
+    <a href="#beneficios" class="scroll-indicator" aria-label="Bajar"><span></span></a>
+  </header>
+
+  <!-- ========================================================
+       BENEFICIOS
+       ======================================================== -->
+  <section id="beneficios" class="benefits">
+    <div class="container">
+      <div class="row row-cols-2 row-cols-lg-4 g-4 text-center">
+        <div class="col benefit"><i class="fa-solid fa-truck-fast"></i><h6>Envío gratis</h6><p>En todos tus pedidos</p></div>
+        <div class="col benefit"><i class="fa-solid fa-shield-halved"></i><h6>Pago seguro</h6><p>Transacciones protegidas</p></div>
+        <div class="col benefit"><i class="fa-solid fa-rotate-left"></i><h6>Devoluciones</h6><p>30 días sin costo</p></div>
+        <div class="col benefit"><i class="fa-regular fa-gem"></i><h6>Calidad premium</h6><p>Selección exclusiva</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       CATÁLOGO DE PRODUCTOS
+       ======================================================== -->
+  <main id="catalogo" class="catalog">
+    <div class="container">
+      <div class="section-header text-center">
+        <p class="eyebrow eyebrow-dark">Nuestra selección</p>
+        <h2 class="section-title">Colección destacada</h2>
+        <!-- Botones de categorías (se generan con JavaScript) -->
+        <div id="categoryFilters" class="category-filters"></div>
+      </div>
+
+      <!-- Indicador de carga mientras se consulta la API -->
+      <div id="loader" class="text-center py-5">
+        <div class="spinner-border" role="status" style="width: 2.5rem; height: 2.5rem;"></div>
+        <p class="mt-3 text-muted small text-uppercase ls-wide">Cargando colección...</p>
+      </div>
+
+      <!-- Mensaje de error si la API no responde -->
+      <div id="errorBox" class="alert alert-danger text-center d-none" role="alert"></div>
+
+      <!-- Rejilla de tarjetas: 1 columna en móvil, 2 en tablet, 3 en laptop, 4 en pantallas grandes -->
+      <div id="productGrid" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 g-xl-5"></div>
+
+      <!-- Mensaje cuando la búsqueda no encuentra nada -->
+      <p id="noResults" class="text-center text-muted py-5 d-none">No encontramos productos con ese criterio.</p>
+    </div>
+  </main>
+
+  <!-- ========================================================
+       BANNER EDITORIAL
+       ======================================================== -->
+  <section id="editorial" class="editorial">
+    <div class="container">
+      <div class="row g-0 editorial-card">
+        <div class="col-lg-6 editorial-img" role="img" aria-label="Perchero con prendas en tonos neutros"></div>
+        <div class="col-lg-6 editorial-text">
+          <p class="eyebrow eyebrow-dark">Editorial</p>
+          <h2 class="section-title">Menos es más</h2>
+          <p>Un armario cápsula con piezas versátiles en tonos neutros. Prendas que combinan entre sí, resisten el paso del tiempo y elevan cualquier ocasión.</p>
+          <a href="#catalogo" class="btn btn-dark-lux mt-2">Ver colección <i class="fa-solid fa-arrow-right ms-2"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       PIE DE PÁGINA
+       ======================================================== -->
+  <footer id="contacto" class="footer">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <a class="brand brand-light" href="#inicio"><i class="fa-solid fa-cart-shopping brand-icon"></i><span>ShopMaster</span></a>
+          <p class="mt-3">Boutique online de moda, joyería y tecnología. Elegancia y calidad en cada detalle.</p>
+          <div class="social">
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6>Tienda</h6>
+          <ul>
+            <li><a href="#catalogo">Colección</a></li>
+            <li><a href="#editorial">Editorial</a></li>
+            <li><a href="#beneficios">Beneficios</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6>Ayuda</h6>
+          <ul>
+            <li><a href="#">Envíos</a></li>
+            <li><a href="#">Devoluciones</a></li>
+            <li><a href="#">Preguntas</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6>Contacto</h6>
+          <ul>
+            <li><i class="fa-solid fa-location-dot me-2"></i>Av. Principal #123, Ciudad Digital</li>
+            <li><i class="fa-solid fa-phone me-2"></i>(601) 555-0123</li>
+            <li><i class="fa-regular fa-envelope me-2"></i>hola@shopmaster.com</li>
+          </ul>
+          <div class="payments">
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-amex"></i>
+            <i class="fa-brands fa-cc-paypal"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-bottom">
+        <span>&copy; <span id="year"></span> ShopMaster · Todos los derechos reservados</span>
+        <span class="credit">Desarrollado por <strong>Sohany Galan</strong> — <strong>24-SISN-8-004</strong></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       MODAL 1: DETALLE DEL PRODUCTO ("Ver más")
+       ======================================================== -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content product-modal">
+        <button type="button" class="btn-close modal-close-float" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <div class="row g-0">
+          <!-- Imagen grande centrada -->
+          <div class="col-md-6 modal-img-col">
+            <img id="modalImage" src="" alt="" class="modal-product-img">
+          </div>
+          <!-- Lista de detalles -->
+          <div class="col-md-6 modal-info-col">
+            <p class="eyebrow eyebrow-dark mb-2" id="modalCategory"></p>
+            <h3 class="modal-title-lux" id="productModalTitle">Producto</h3>
+            <p class="modal-price" id="modalPrice"></p>
+
+            <ul class="list-group list-group-flush detail-list" id="modalDetails"></ul>
+
+            <!-- Selector de cantidad + botón -->
+            <label for="modalQty" class="form-label small text-uppercase ls-wide mt-4">Cantidad</label>
+            <div class="d-flex gap-3 flex-wrap">
+              <div class="qty-selector">
+                <button type="button" id="qtyMinus" aria-label="Restar"><i class="fa-solid fa-minus"></i></button>
+                <input type="number" id="modalQty" value="1" min="1" max="99">
+                <button type="button" id="qtyPlus" aria-label="Sumar"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              <button type="button" class="btn btn-dark-lux flex-grow-1" id="addToCartBtn">
+                <i class="fa-solid fa-bag-shopping me-2"></i>Agregar al carrito
+              </button>
+            </div>
+            <p class="small text-muted mt-3 mb-0"><i class="fa-solid fa-truck-fast me-2"></i>Envío gratis · Devolución en 30 días</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       OFFCANVAS: CARRITO DE COMPRAS (panel lateral)
+       ======================================================== -->
+  <div class="offcanvas offcanvas-end cart-panel" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartTitle">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="cartTitle">Tu carrito</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <!-- Lista de productos del carrito (se genera con JavaScript) -->
+      <div id="cartItems" class="flex-grow-1"></div>
+
+      <!-- Resumen y botones -->
+      <div class="cart-summary">
+        <div class="d-flex justify-content-between small text-muted mb-1">
+          <span>Envío</span><span>Gratis</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-baseline mb-3">
+          <span class="text-uppercase small ls-wide">Total</span>
+          <span id="cartTotal" class="cart-total">$0.00</span>
+        </div>
+        <button id="checkoutBtn" class="btn btn-dark-lux w-100 mb-2" disabled>
+          <i class="fa-solid fa-lock me-2"></i>Ir a pagar
+        </button>
+        <button id="clearCartBtn" class="btn btn-link-lux w-100" disabled>
+          <i class="fa-regular fa-trash-can me-1"></i> Vaciar carrito
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 2: PASARELA DE PAGO (simulada)
+       ======================================================== -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content checkout-modal">
+        <div class="modal-header">
+          <h5 class="modal-title-lux fs-4 mb-0" id="checkoutTitle">Pago seguro</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <!-- novalidate: desactiva la validación del navegador para usar la nuestra -->
+        <form id="paymentForm" novalidate>
+          <div class="modal-body">
+            <div class="checkout-total">
+              <span><i class="fa-solid fa-receipt me-2"></i>Total a pagar</span>
+              <strong id="checkoutTotal">$0.00</strong>
+            </div>
+
+            <!-- Nombre completo -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="cardName" placeholder="Nombre completo" autocomplete="cc-name">
+              <label for="cardName">Nombre completo</label>
+              <div class="invalid-feedback">Escribe tu nombre y apellido (solo letras).</div>
+            </div>
+
+            <!-- Número de tarjeta -->
+            <div class="mb-3 position-relative">
+              <div class="form-floating">
+                <input type="text" class="form-control pe-5" id="cardNumber" placeholder="Número de tarjeta" inputmode="numeric" maxlength="23" autocomplete="cc-number">
+                <label for="cardNumber">Número de tarjeta</label>
+                <i id="cardBrandIcon" class="fa-regular fa-credit-card card-brand"></i>
+                <div class="invalid-feedback">Número de tarjeta no válido.</div>
+              </div>
+              <div class="form-text">Tarjeta de prueba: 4242 4242 4242 4242</div>
+            </div>
+
+            <div class="row g-3">
+              <!-- Fecha de vencimiento -->
+              <div class="col-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA" inputmode="numeric" maxlength="5" autocomplete="cc-exp">
+                  <label for="cardExpiry">Vencimiento (MM/AA)</label>
+                  <div class="invalid-feedback">Fecha inválida o vencida.</div>
+                </div>
+              </div>
+              <!-- Código de seguridad -->
+              <div class="col-6">
+                <div class="form-floating">
+                  <input type="password" class="form-control" id="cardCvv" placeholder="CVV" inputmode="numeric" maxlength="4" autocomplete="cc-csc">
+                  <label for="cardCvv">CVV</label>
+                  <div class="invalid-feedback">3 o 4 dígitos.</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="small text-muted mt-3 mb-0"><i class="fa-solid fa-shield-halved me-1"></i>Pago simulado: no se realiza ningún cobro real ni se guardan los datos de la tarjeta.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link-lux" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-dark-lux px-4" id="payBtn">
+              <i class="fa-solid fa-check me-1"></i> Pagar ahora
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       MODAL 3: COMPRA EXITOSA + DESCARGA DEL TICKET
+       ======================================================== -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-body p-5">
+          <div class="success-icon mb-3"><i class="fa-solid fa-check"></i></div>
+          <h4 class="modal-title-lux" id="successTitle">¡Pago aprobado!</h4>
+          <p class="text-muted mb-1">Gracias por tu compra, <strong id="successName"></strong>.</p>
+          <p class="text-muted">Pedido <strong id="successOrderId"></strong></p>
+          <div class="d-flex flex-column gap-2 mt-4">
+            <button class="btn btn-dark-lux" id="downloadTicketBtn">
+              <i class="fa-solid fa-file-pdf me-2"></i>Descargar ticket
+            </button>
+            <button class="btn btn-link-lux" data-bs-dismiss="modal">Seguir comprando</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       SCRIPTS (al final del body para que el HTML cargue primero)
+       ======================================================== -->
+  <!-- Bootstrap JS (incluye Popper) para modales, offcanvas y alertas -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jsPDF para generar el ticket en PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Nuestra lógica -->
+  <script src="script.js"></script>
+</body>
+</html>

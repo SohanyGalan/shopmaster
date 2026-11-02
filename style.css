@@ -1,0 +1,833 @@
+/* ============================================================
+   SHOPMASTER - Archivo: style.css  →  PRESENTACIÓN (diseño visual)
+   ------------------------------------------------------------
+   Estilo "boutique de lujo": negro, marfil y dorado, títulos
+   con serifa (Playfair Display) y texto moderno (Inter).
+   Este archivo se carga DESPUÉS de Bootstrap, por eso puede
+   sobrescribir sus colores y estilos.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. VARIABLES: paleta de colores (psicología del color)
+   ------------------------------------------------------------ */
+:root {
+  --ink: #111111;          /* Negro: lujo, elegancia, autoridad */
+  --ink-soft: #2b2b2b;
+  --ivory: #faf8f5;        /* Marfil: limpieza, calidez, sofisticación */
+  --sand: #f3efe9;         /* Arena: fondo suave para productos */
+  --gold: #b08d57;         /* Dorado: exclusividad y valor */
+  --gold-light: #d9c29a;
+  --muted: #6f6a64;        /* Gris cálido: texto secundario legible */
+  --line: #e7e2da;         /* Líneas finas */
+  --success: #1f6f4a;      /* Verde profundo: compra exitosa */
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', 'Roboto', system-ui, sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Sobrescribimos las variables internas de Bootstrap */
+  --bs-body-font-family: var(--font-sans);
+  --bs-body-color: var(--ink);
+  --bs-body-bg: var(--ivory);
+  --bs-border-color: var(--line);
+  --bs-success: var(--success);
+  --bs-success-rgb: 31, 111, 74;
+}
+
+/* ------------------------------------------------------------
+   2. ESTILOS GENERALES
+   ------------------------------------------------------------ */
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  overflow-x: hidden; /* evita desplazamiento horizontal en móviles */
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.ls-wide { letter-spacing: 0.18em; }
+
+/* Texto pequeño en mayúsculas sobre los títulos */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 1rem;
+}
+.eyebrow-dark { color: var(--gold); }
+
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1.5rem;
+}
+
+/* ------------------------------------------------------------
+   3. BOTONES PERSONALIZADOS
+   ------------------------------------------------------------ */
+.btn-dark-lux,
+.btn-light-lux,
+.btn-outline-lux {
+  border-radius: 0;
+  padding: 0.95rem 2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: all 0.35s var(--ease);
+}
+
+.btn-dark-lux { background: var(--ink); color: #fff; border: 1px solid var(--ink); }
+.btn-dark-lux:hover,
+.btn-dark-lux:focus-visible { background: var(--gold); border-color: var(--gold); color: #fff; }
+.btn-dark-lux:disabled { background: var(--ink); color: #fff; opacity: 0.35; }
+
+.btn-light-lux { background: #fff; color: var(--ink); border: 1px solid #fff; }
+.btn-light-lux:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+.btn-outline-lux { background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.7); }
+.btn-outline-lux:hover { background: #fff; color: var(--ink); }
+
+.btn-link-lux {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.btn-link-lux:hover { color: var(--ink); }
+
+/* ------------------------------------------------------------
+   4. BARRA DE ANUNCIOS Y NAVEGACIÓN
+   ------------------------------------------------------------ */
+.announcement-bar {
+  background: var(--ink);
+  color: var(--gold-light);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+#mainNav {
+  background: rgba(250, 248, 245, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  padding: 1rem 0;
+  transition: padding 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
+}
+/* Clase que agrega JavaScript al hacer scroll */
+#mainNav.scrolled {
+  padding: 0.55rem 0;
+  border-bottom-color: var(--line);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.brand-icon {
+  font-size: 0.95rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 50%;
+}
+.brand-light { color: #fff; }
+
+#mainNav .nav-link {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 0.5rem 1.1rem !important;
+  position: relative;
+}
+/* Línea dorada animada debajo del enlace */
+#mainNav .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: 0.2rem;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+#mainNav .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--ink);
+  padding: 0.3rem 0.2rem;
+  color: var(--muted);
+}
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.85rem;
+  width: 150px;
+  color: var(--ink);
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-size: 1.15rem;
+  color: var(--ink);
+  transition: background 0.25s;
+}
+.icon-btn:hover { background: var(--sand); }
+
+.cart-badge {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.3rem;
+  border-radius: 1rem;
+  background: var(--gold);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 991.98px) {
+  #navMenu { padding: 1rem 0 0.5rem; }
+  .search-box { margin-top: 0.75rem; }
+  .search-box input { width: 100%; }
+}
+
+/* ------------------------------------------------------------
+   5. HERO (banner principal con ropa de fondo)
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  min-height: calc(100vh - 110px);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* Foto de fondo en una capa aparte para animar un zoom lento tipo cine */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('img/hero.jpg') center / cover no-repeat;
+  animation: heroZoom 18s ease-out both;
+}
+
+/* Capa oscura para que el texto se lea sobre la foto */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 8, 6, 0.85) 0%, rgba(10, 8, 6, 0.55) 45%, rgba(10, 8, 6, 0.15) 100%),
+    linear-gradient(0deg, rgba(10, 8, 6, 0.45) 0%, transparent 40%);
+}
+
+.hero-content { position: relative; z-index: 1; padding-top: 4rem; padding-bottom: 6rem; }
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+.hero-title em { color: var(--gold-light); font-style: italic; }
+
+.hero-text {
+  max-width: 520px;
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 2.5rem;
+}
+
+/* Entrada escalonada de los elementos del hero */
+.hero-content > * { animation: fadeInUp 1s var(--ease) both; }
+.hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.45s; }
+
+/* Indicador de "bajar" animado */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  z-index: 1;
+}
+.scroll-indicator span {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 3px;
+  height: 8px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: #fff;
+  animation: scrollDot 1.8s infinite;
+}
+
+/* ------------------------------------------------------------
+   6. BENEFICIOS
+   ------------------------------------------------------------ */
+.benefits { background: #fff; border-bottom: 1px solid var(--line); padding: 3rem 0; }
+.benefit i { font-size: 1.5rem; color: var(--gold); margin-bottom: 0.9rem; }
+.benefit h6 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.benefit p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+/* ------------------------------------------------------------
+   7. CATÁLOGO Y FILTROS
+   ------------------------------------------------------------ */
+.catalog { padding: 6rem 0 5rem; }
+.section-header { margin-bottom: 3.5rem; }
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.75rem;
+}
+.category-pill {
+  background: none;
+  border: none;
+  padding: 0.4rem 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s, border-color 0.25s;
+}
+.category-pill:hover { color: var(--ink); }
+.category-pill.active { color: var(--ink); border-bottom-color: var(--gold); }
+
+#loader .spinner-border { color: var(--gold); border-width: 2px; }
+
+/* ------------------------------------------------------------
+   8. TARJETAS DE PRODUCTO
+   ------------------------------------------------------------ */
+.product-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.7s var(--ease) both;
+}
+
+/* Contenedor de imagen con proporción de revista (4:5) */
+.product-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--sand);
+  overflow: hidden;
+  cursor: pointer;
+}
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 14%;
+  mix-blend-mode: multiply; /* el fondo blanco de la foto se funde con el color arena */
+  transition: transform 0.8s var(--ease);
+}
+.product-card:hover .product-media img { transform: scale(1.07); }
+
+/* Botón "Ver más" que sube desde abajo al pasar el ratón */
+.quick-view {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.85rem;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transform: translateY(calc(100% + 1.5rem)); /* escondido debajo de la foto */
+  transition: transform 0.45s var(--ease), background 0.3s;
+}
+.product-card:hover .quick-view,
+.quick-view:focus-visible { transform: translateY(0); }
+.quick-view:hover { background: var(--gold); }
+
+/* Etiqueta de valoración sobre la imagen */
+.rating-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.25rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.rating-tag i { color: var(--gold); }
+
+.product-info { padding: 1.1rem 0.15rem 0; display: flex; flex-direction: column; flex-grow: 1; }
+
+.product-category {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+/* Título: máximo 2 líneas con "..." */
+.product-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 0.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Descripción: máximo 2 líneas con "..." */
+.product-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 0.8rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 0.8rem;
+}
+
+.price {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.view-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.view-link i { transition: transform 0.3s var(--ease); }
+.view-link:hover { color: var(--gold); }
+.view-link:hover i { transform: translateX(4px); }
+
+/* En pantallas táctiles no hay "hover": ocultamos el botón flotante y queda el enlace "Ver más" */
+@media (hover: none) {
+  .quick-view { display: none; }
+}
+
+/* ------------------------------------------------------------
+   9. BANNER EDITORIAL
+   ------------------------------------------------------------ */
+.editorial { padding: 0 0 6rem; }
+.editorial-card { background: #fff; border: 1px solid var(--line); }
+.editorial-img {
+  min-height: 420px;
+  background: url('img/editorial.jpg') center / cover no-repeat;
+}
+.editorial-text {
+  padding: clamp(2.5rem, 6vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.editorial-text p:not(.eyebrow) { color: var(--muted); font-weight: 300; line-height: 1.8; max-width: 440px; }
+
+/* ------------------------------------------------------------
+   10. MODAL DE PRODUCTO
+   ------------------------------------------------------------ */
+.modal-content { border: none; border-radius: 0; }
+.modal-backdrop.show { opacity: 0.6; }
+
+.product-modal { overflow: hidden; }
+.modal-close-float {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 2;
+}
+.modal-img-col {
+  background: var(--sand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  min-height: 380px;
+}
+.modal-product-img {
+  max-height: 440px;
+  max-width: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  animation: zoomIn 0.5s var(--ease) both;
+}
+.modal-info-col { padding: 3rem 2.5rem; }
+
+.modal-title-lux {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 1.25;
+}
+.modal-price {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin: 0.75rem 0 1.25rem;
+}
+
+.detail-list .list-group-item {
+  background: transparent;
+  padding: 0.8rem 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+.detail-list .detail-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+.detail-list .detail-desc { font-weight: 300; line-height: 1.7; }
+.stars i { color: var(--gold); font-size: 0.8rem; }
+
+/* Selector de cantidad */
+.qty-selector {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--ink);
+}
+.qty-selector button {
+  background: none;
+  border: none;
+  width: 2.6rem;
+  font-size: 0.75rem;
+  transition: background 0.2s;
+}
+.qty-selector button:hover { background: var(--sand); }
+.qty-selector input {
+  width: 3rem;
+  border: none;
+  text-align: center;
+  font-weight: 500;
+  background: transparent;
+  outline: none;
+}
+/* Oculta las flechitas del input numérico */
+.qty-selector input::-webkit-outer-spin-button,
+.qty-selector input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.qty-selector input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
+/* ------------------------------------------------------------
+   11. CARRITO (offcanvas)
+   ------------------------------------------------------------ */
+.cart-panel { background: var(--ivory); width: 420px !important; max-width: 100%; }
+.cart-panel .offcanvas-header { border-bottom: 1px solid var(--line); padding: 1.5rem; }
+.cart-panel .offcanvas-title { font-family: var(--font-serif); font-size: 1.5rem; }
+.cart-panel .offcanvas-body { padding: 0 1.5rem 1.5rem; }
+
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+  animation: fadeInRight 0.4s var(--ease) both;
+}
+.cart-item img {
+  width: 76px;
+  height: 92px;
+  object-fit: contain;
+  padding: 8px;
+  background: var(--sand);
+  mix-blend-mode: multiply;
+  flex-shrink: 0;
+}
+.min-w-0 { min-width: 0; } /* permite que el título se recorte con "..." */
+.cart-item-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.cart-item .qty-selector { border-color: var(--line); }
+.cart-item .qty-selector button { width: 1.9rem; font-size: 0.65rem; }
+.cart-item .qty-selector input { width: 2.2rem; font-size: 0.8rem; padding: 0.25rem 0; }
+.cart-item-price { font-family: var(--font-serif); font-size: 1.05rem; }
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 0.25rem;
+}
+.remove-btn:hover { color: #b3261e; }
+
+.cart-summary { border-top: 1px solid var(--ink); padding-top: 1.25rem; }
+.cart-total { font-family: var(--font-serif); font-size: 1.8rem; }
+
+.cart-empty { text-align: center; color: var(--muted); padding: 4rem 1rem; }
+.cart-empty i { font-size: 2.6rem; color: var(--gold-light); }
+.cart-empty h6 { font-family: var(--font-serif); font-size: 1.3rem; color: var(--ink); margin: 1rem 0 0.4rem; }
+
+/* Animación del contador cuando se agrega un producto */
+.badge-bump { animation: bump 0.45s var(--ease); }
+
+/* ------------------------------------------------------------
+   12. PASARELA DE PAGO
+   ------------------------------------------------------------ */
+.checkout-modal .modal-header,
+.checkout-modal .modal-footer { border-color: var(--line); padding: 1.25rem 1.75rem; }
+.checkout-modal .modal-body { padding: 1.75rem; }
+
+.checkout-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--ink);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.checkout-total strong { font-family: var(--font-serif); font-size: 1.5rem; letter-spacing: 0; color: var(--gold-light); }
+
+.checkout-modal .form-control {
+  border-radius: 0;
+  border-color: var(--line);
+  background: #fff;
+}
+.checkout-modal .form-control:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.2rem rgba(176, 141, 87, 0.15);
+}
+.card-brand {
+  position: absolute;
+  right: 1rem;
+  top: 1.15rem;
+  font-size: 1.5rem;
+  color: var(--muted);
+  pointer-events: none;
+}
+.checkout-modal .form-control.is-invalid ~ .card-brand { right: 2.6rem; }
+
+/* ------------------------------------------------------------
+   13. ALERTAS FLOTANTES
+   ------------------------------------------------------------ */
+.alert-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+  width: min(380px, calc(100% - 3rem));
+}
+.alert-container .alert {
+  border: none;
+  border-radius: 0;
+  border-left: 3px solid var(--gold);
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.88rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+.alert-container .alert-warning { border-left-color: #e0a84e; }
+.alert-container .alert-danger { border-left-color: #e05a4e; }
+.alert-container .btn-close { filter: invert(1); }
+
+/* ------------------------------------------------------------
+   14. MODAL DE ÉXITO
+   ------------------------------------------------------------ */
+.success-icon {
+  width: 5rem;
+  height: 5rem;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  animation: zoomIn 0.6s var(--ease) both;
+}
+
+/* ------------------------------------------------------------
+   15. PIE DE PÁGINA
+   ------------------------------------------------------------ */
+.footer {
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 5rem 0 0;
+  font-size: 0.88rem;
+  font-weight: 300;
+}
+.footer h6 {
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.footer ul { list-style: none; padding: 0; margin: 0; }
+.footer li { margin-bottom: 0.7rem; }
+.footer a:hover { color: var(--gold-light); }
+
+.social { display: flex; gap: 0.6rem; margin-top: 1.5rem; }
+.social a {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  transition: all 0.3s;
+}
+.social a:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+.payments { display: flex; gap: 0.8rem; font-size: 1.8rem; margin-top: 1.25rem; color: rgba(255, 255, 255, 0.45); }
+
+.footer-bottom {
+  margin-top: 4rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+.footer-bottom .credit strong { color: var(--gold-light); font-weight: 500; }
+
+/* ------------------------------------------------------------
+   16. ANIMACIONES (keyframes)
+   ------------------------------------------------------------ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes heroZoom {
+  from { transform: scale(1.15); }
+  to   { transform: scale(1); }
+}
+@keyframes scrollDot {
+  0%   { opacity: 0; transform: translateY(0); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(14px); }
+}
+@keyframes bump {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.45); }
+}
+
+/* Respeta a usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ------------------------------------------------------------
+   17. RESPONSIVE (ajustes para móviles)
+   ------------------------------------------------------------ */
+@media (max-width: 767.98px) {
+  .announcement-bar { font-size: 0.62rem; letter-spacing: 0.1em; }
+  .brand { font-size: 1.35rem; }
+  .catalog { padding: 4rem 0 3rem; }
+  .modal-info-col { padding: 2rem 1.5rem; }
+  .modal-img-col { min-height: 280px; padding: 2rem; }
+  .editorial-img { min-height: 300px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
